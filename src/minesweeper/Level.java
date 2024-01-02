@@ -35,8 +35,7 @@ public class Level extends Container {
 		int bombCount = 0;
 		for (int y=yGrid-1;y<=yGrid+1;y++) {
 			for (int x=xGrid-1;x<=xGrid+1;x++) {
-				if ((x>=0 & x<levelArray[0].length) &
-					(y>=0 & y<levelArray.length)) {
+				if (validPosition(x, y)) {
 					if (levelArray[x][y].hasBomb()) {
 						bombCount+=1;
 					}
@@ -46,7 +45,31 @@ public class Level extends Container {
 		return bombCount;
 	}
 	
+	public void poolZeros(int xGrid, int yGrid) {
+		checkZero(xGrid, yGrid-1);
+		checkZero(xGrid, yGrid+1);
+		checkZero(xGrid-1, yGrid);
+		checkZero(xGrid+1, yGrid);
+	}
+	
+	public void checkZero(int xGrid, int yGrid) {
+		if (validPosition(xGrid, yGrid)) {
+			if (validPosition(xGrid, yGrid) &
+				levelArray[xGrid][yGrid].getBlockType()==Block.grass &
+				countBombsAround(xGrid, yGrid)==0) {
+				
+				levelArray[xGrid][yGrid].leftClick();
+				poolZeros(xGrid,yGrid);
+			}
+		}
+	}
+	
 	//IO
+	public boolean validPosition(int xGrid, int yGrid) {
+		return ((xGrid>=0 & xGrid<levelArray[0].length) &
+				(yGrid>=0 & yGrid<levelArray.length));
+	}
+	
 	public static Block[][] getLevelArray() {
 		return levelArray;
 	}

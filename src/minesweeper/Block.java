@@ -48,7 +48,11 @@ public class Block extends JPanel {
 			blockType=dirt;
 			int[] coords = getGridLocation(this.getX(),this.getY());
 			int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
-			jlabel.setText(String.valueOf(bombs));
+			if (bombs>0) {
+				jlabel.setText(String.valueOf(bombs));
+			} else {
+				Main.getLevel().poolZeros(coords[0],coords[1]);
+			}
 		}
 		updateBackground();
 	}
@@ -97,6 +101,10 @@ public class Block extends JPanel {
 	//IO
 	public boolean hasBomb() {
 		return hasBomb;
+	}
+	
+	public int getBlockType() {
+		return blockType;
 	}
 	
 }
