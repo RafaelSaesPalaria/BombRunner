@@ -12,7 +12,6 @@ public class MouseL implements MouseListener {
 		} else if (e.getButton()==MouseEvent.BUTTON3) {
 			((Block)e.getSource()).rightClick();
 		}
-		System.out.println(e);
 	}
 	
 	//Inhered Methods

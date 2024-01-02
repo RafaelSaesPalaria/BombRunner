@@ -2,9 +2,12 @@ package minesweeper;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Block extends JPanel {
 
@@ -18,18 +21,23 @@ public class Block extends JPanel {
 	
 	private boolean hasBomb;
 	private int blockType = grass;
+	private JLabel jlabel = new JLabel();
 	
 	
 	//Constructor
 	public Block(int x, int y, boolean hasBomb) {
 		this.hasBomb = hasBomb;
-		int[] coords = getGridLocation(x, y);
+		int[] coords = getLocationOnGrid(x, y);
 		setLocation(coords[0], coords[1]);
 		setSize(blockSize);
 		setLayout(null);
 		setBackground(Color.green);
 		setBorder(BorderFactory.createLineBorder(Color.black, 1));
-		System.out.println(this);
+		
+		jlabel.setSize(blockSize);
+		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+		jlabel.setFont(new Font("Arial",Font.PLAIN,19));
+		add(jlabel);
 	}
 	
 	//Methods
@@ -38,6 +46,9 @@ public class Block extends JPanel {
 			blockType=bomb;
 		} else {
 			blockType=dirt;
+			int[] coords = getGridLocation(this.getX(),this.getY());
+			int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
+			jlabel.setText(String.valueOf(bombs));
 		}
 		updateBackground();
 	}
@@ -73,10 +84,19 @@ public class Block extends JPanel {
 				break;
 		}
 	}
+	public int[] getGridLocation(int xGrid, int yGrid) {
+		int[] coords = {xGrid/blockSize.width,yGrid/blockSize.height};
+		return coords;
+	}
 	
-	public int[] getGridLocation(int x, int y) {
+	public int[] getLocationOnGrid(int x, int y) {
 		int[] coords = {x*blockSize.width,y*blockSize.height};
 		return coords;
+	}
+	
+	//IO
+	public boolean hasBomb() {
+		return hasBomb;
 	}
 	
 }

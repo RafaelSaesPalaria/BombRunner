@@ -31,6 +31,21 @@ public class Level extends Container {
 		}
 	}
 	
+	public int countBombsAround(int xGrid, int yGrid) {
+		int bombCount = 0;
+		for (int y=yGrid-1;y<=yGrid+1;y++) {
+			for (int x=xGrid-1;x<=xGrid+1;x++) {
+				if ((x>=0 & x<levelArray[0].length) &
+					(y>=0 & y<levelArray.length)) {
+					if (levelArray[x][y].hasBomb()) {
+						bombCount+=1;
+					}
+				}
+			}
+		}
+		return bombCount;
+	}
+	
 	//IO
 	public static Block[][] getLevelArray() {
 		return levelArray;
