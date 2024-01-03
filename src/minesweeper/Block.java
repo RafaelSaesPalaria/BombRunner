@@ -50,7 +50,6 @@ public class Block extends JPanel {
 		if (blockType==grass) {
 			if (hasBomb) {
 				blockType=bomb;
-				Main.getLevel().lose();
 			} else {
 				blockType=dirt;
 				int[] coords = getGridLocation(this.getX(),this.getY());
@@ -64,6 +63,10 @@ public class Block extends JPanel {
 			}
 		}
 		updateBackground();
+		
+	}
+	
+	public void lose() {
 		
 	}
 	

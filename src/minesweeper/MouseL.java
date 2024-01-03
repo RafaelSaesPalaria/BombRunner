@@ -19,6 +19,9 @@ public class MouseL implements MouseListener {
 					block.setBomb(false);
 				}
 				block.leftClick();
+				if (block.hasBomb()) {
+					Main.getLevel().lose();
+				}
 			} else if (e.getButton()==MouseEvent.BUTTON3) {
 				block.rightClick();
 			}

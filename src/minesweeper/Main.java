@@ -22,4 +22,8 @@ public class Main {
 	public static Screen getScreen() {
 		return screen;
 	}
+	
+	public static void setLevel(Level level) {
+		Main.level = level;
+	}
 }

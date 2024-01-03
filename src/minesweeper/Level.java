@@ -1,25 +1,39 @@
 package minesweeper;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Level extends Container {
 
 	//Fields
 	private static Block[][] levelArray = new Block[8][8];
-	private MouseL mouse = new MouseL();
+	private MouseL mouse;
 	
 	//Constructor
 	public Level() {
 		setLocation(0,0);
 		setSize(Main.getScreen().getContentPane().getSize());
 		setLayout(null);
-		setBackground(Color.yellow);
 		Main.getScreen().add(this);
-		createLevelArray();
+		start();
 	}
 	
 	//Methods
+	public void start() {
+		levelArray = new Block[8][8];
+		mouse = new MouseL();
+		createLevelArray();
+	}
 	public void createLevelArray() {
 		for (int y=0;y < levelArray.length;y++) {
 			for (int x=0;x < levelArray[y].length;x++) {
@@ -70,6 +84,40 @@ public class Level extends Container {
 				levelArray[x][y].leftClick();
 			}
 		}
+		JPanel jpanel = new JPanel();
+		jpanel.setBounds(2+getSize().width/4, getSize().height/4, getSize().width/2, getSize().height/2);
+		jpanel.setBackground(Color.white);
+		jpanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		jpanel.setLayout(null);
+		
+		JLabel jlabel = new JLabel("You Lost!");
+		jlabel.setBounds(10, 10, jpanel.getWidth(), 100);
+		jlabel.setFont(new Font("Arial",Font.PLAIN,29));
+		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+		jpanel.add(jlabel);
+		
+		JLabel jlabels = new JLabel("Points Time");
+		jpanel.add(jlabels);
+		
+		Button jbutton = new Button("Continue");
+		jbutton.setFont(new Font("Arial",Font.PLAIN,29));
+		jbutton.setBounds((jpanel.getWidth()/2)-75, 160, 150, 70);
+		jbutton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.getScreen().remove(Main.getLevel());
+				Main.setLevel(new Level());
+			}
+		});
+		jpanel.add(jbutton);
+		
+		
+		
+		add(jpanel);
+		setComponentZOrder(jpanel, 0);
+		jpanel.revalidate();
+		jpanel.repaint();
+		
 	}
 	
 	//IO
