@@ -23,6 +23,11 @@ public class Block extends JPanel {
 	private int blockType = grass;
 	private JLabel jlabel = new JLabel();
 	
+	private Color[] Colors = {
+			Color.red, Color.orange,
+			Color.yellow, Color.green,
+			Color.cyan,Color.BLUE,
+			new Color(0,0,139), new Color(128,0,128)};
 	
 	//Constructor
 	public Block(int x, int y, boolean hasBomb) {
@@ -36,7 +41,7 @@ public class Block extends JPanel {
 		
 		jlabel.setSize(blockSize);
 		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabel.setFont(new Font("Arial",Font.PLAIN,19));
+		jlabel.setFont(new Font("Arial",Font.PLAIN,30));
 		add(jlabel);
 	}
 	
@@ -52,6 +57,7 @@ public class Block extends JPanel {
 				int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
 				if (bombs>0) {
 					jlabel.setText(String.valueOf(bombs));
+					jlabel.setForeground(Colors[bombs]);
 				} else {
 					Main.getLevel().poolZeros(coords[0],coords[1]);
 				}
@@ -78,7 +84,7 @@ public class Block extends JPanel {
 				setBackground(Color.black);
 				break;
 			case dirt:
-				setBackground(new Color(165,42,42));
+				setBackground(new Color(205,142,102));
 				break;
 			case flag:
 				setBackground(Color.red);
