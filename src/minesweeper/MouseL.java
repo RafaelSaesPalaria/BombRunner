@@ -5,12 +5,23 @@ import java.awt.event.MouseListener;
 
 public class MouseL implements MouseListener {
 
+	//Fields
+	private int clickCount = 0;
+	
 	//Methods
 	public void mouseTreatment(MouseEvent e) {
-		if (e.getButton()==MouseEvent.BUTTON1) {
-			((Block)e.getSource()).leftClick();
-		} else if (e.getButton()==MouseEvent.BUTTON3) {
-			((Block)e.getSource()).rightClick();
+		if (e.getSource().getClass()==Block.class) {
+			clickCount+=1;
+			Block block = (Block) e.getSource();
+			
+			if (e.getButton()==MouseEvent.BUTTON1) {
+				if (clickCount<=1) {
+					block.setBomb(false);
+				}
+				block.leftClick();
+			} else if (e.getButton()==MouseEvent.BUTTON3) {
+				block.rightClick();
+			}
 		}
 	}
 	

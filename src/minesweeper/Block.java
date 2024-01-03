@@ -42,19 +42,23 @@ public class Block extends JPanel {
 	
 	//Methods
 	public void leftClick() {
-		if (hasBomb) {
-			blockType=bomb;
-		} else {
-			blockType=dirt;
-			int[] coords = getGridLocation(this.getX(),this.getY());
-			int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
-			if (bombs>0) {
-				jlabel.setText(String.valueOf(bombs));
+		if (blockType==grass) {
+			if (hasBomb) {
+				blockType=bomb;
+				Main.getLevel().lose();
 			} else {
-				Main.getLevel().poolZeros(coords[0],coords[1]);
+				blockType=dirt;
+				int[] coords = getGridLocation(this.getX(),this.getY());
+				int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
+				if (bombs>0) {
+					jlabel.setText(String.valueOf(bombs));
+				} else {
+					Main.getLevel().poolZeros(coords[0],coords[1]);
+				}
 			}
 		}
 		updateBackground();
+		
 	}
 	
 	public void rightClick() {
@@ -101,6 +105,10 @@ public class Block extends JPanel {
 	//IO
 	public boolean hasBomb() {
 		return hasBomb;
+	}
+	
+	public void setBomb(boolean bomb) {
+		this.hasBomb = bomb;
 	}
 	
 	public int getBlockType() {

@@ -64,6 +64,14 @@ public class Level extends Container {
 		}
 	}
 	
+	public void lose() {
+		for (int y=0;y < levelArray.length;y++) {
+			for (int x=0;x < levelArray[y].length;x++) {
+				levelArray[x][y].leftClick();
+			}
+		}
+	}
+	
 	//IO
 	public boolean validPosition(int xGrid, int yGrid) {
 		return ((xGrid>=0 & xGrid<levelArray[0].length) &
