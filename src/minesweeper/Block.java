@@ -91,10 +91,12 @@ public class Block extends JPanel {
 				setBackground(Color.red);
 				break;
 			case questionMark:
-				setBackground(Color.magenta);
+				jlabel.setText("?");
+				setBackground(Color.green);
 				break;
 			case grass:
 			default:
+				jlabel.setText("");
 				setBackground(Color.green);
 				break;
 		}
