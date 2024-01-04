@@ -90,36 +90,39 @@ public class Level extends Container {
 	}
 	
 	public void lose() {
+		bombLeft = 0;
 		for (int y=0;y < levelArray.length;y++) {
 			for (int x=0;x < levelArray[y].length;x++) {
+				if (levelArray[x][y].hasBomb() & levelArray[x][y].getBlockType()!=Block.flag) {
+					bombLeft+=1;
+				}
 				levelArray[x][y].leftClick();
 				levelArray[x][y].removeMouseListener(mouse);
 				levelArray[x][y].repaint();
 			}
 		}
 
-		endPanel("You Lost!");
+		endPanel("You Lost!",bombLeft+" Bombs left");
 	}
 	
 	public void win() {
 		endPanel("You Won!");
 	}
 	
-	public void endPanel(String message) {
+	public void endPanel(String... message) {
 		JPanel jpanel = new JPanel();
 		jpanel.setBounds(2+getSize().width/4, getSize().height/4, getSize().width/2, getSize().height/2);
 		jpanel.setBackground(Color.white);
 		jpanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		jpanel.setLayout(null);
 		
-		JLabel jlabel = new JLabel(message);
-		jlabel.setBounds(10, 10, jpanel.getWidth(), 100);
-		jlabel.setFont(new Font("Arial",Font.PLAIN,29));
-		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jpanel.add(jlabel);
-		
-		JLabel jlabels = new JLabel("Points Time");
-		jpanel.add(jlabels);
+		for (int i=0; i < message.length; i++) {
+			JLabel jlabel = new JLabel(message[i]);
+			jlabel.setBounds(10, 10+(i*50), jpanel.getWidth(), 50);
+			jlabel.setFont(new Font("Arial",Font.PLAIN,29));
+			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+			jpanel.add(jlabel);
+		}
 		
 		Button jbutton = new Button("Continue");
 		jbutton.setFont(new Font("Arial",Font.PLAIN,29));
@@ -138,6 +141,7 @@ public class Level extends Container {
 		setComponentZOrder(jpanel, 0);
 		jpanel.revalidate();
 		jpanel.repaint();
+		repaint();
 	}
 	
 	public void countBombs() {
