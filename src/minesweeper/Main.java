@@ -21,13 +21,10 @@ public class Main {
 	}
 	
 	public static void restart() {
-		Rectangle bounds = screen.getBounds();
-		screen.dispose();
-		
-		screen = new Screen();
-		screen.setBounds(bounds);
+		screen.remove(level);
 		level = new Level();
 		screen.add(level);
+		screen.repaint();
 	}
 	
 	//IO

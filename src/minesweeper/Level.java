@@ -141,7 +141,6 @@ public class Level extends Container {
 		setComponentZOrder(jpanel, 0);
 		jpanel.revalidate();
 		jpanel.repaint();
-		repaint();
 	}
 	
 	public void countBombs() {
@@ -156,7 +155,6 @@ public class Level extends Container {
 				}
 			}
 		}
-		System.out.println(bombLeft + " "+ bombWrong);
 		if (bombLeft==0 & bombWrong==0) {win();}
 	}
 	
