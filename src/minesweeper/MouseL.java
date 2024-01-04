@@ -22,7 +22,7 @@ public class MouseL implements MouseListener {
 				if (block.hasBomb()) {
 					Main.getLevel().lose();
 				}
-			} else if (e.getButton()==MouseEvent.BUTTON3) {
+			} else if (e.getButton()==MouseEvent.BUTTON3 & e.getID()==MouseEvent.MOUSE_CLICKED) {
 				block.rightClick();
 			}
 		}

@@ -41,7 +41,7 @@ public class Block extends JPanel {
 		
 		jlabel.setSize(blockSize);
 		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
-		jlabel.setFont(new Font("Arial",Font.PLAIN,30));
+		jlabel.setFont(new Font("Arial",Font.BOLD,30));
 		add(jlabel);
 	}
 	
@@ -62,11 +62,8 @@ public class Block extends JPanel {
 				}
 			}
 		}
+		Main.getLevel().countBombs();
 		updateBackground();
-		
-	}
-	
-	public void lose() {
 		
 	}
 	
@@ -78,6 +75,7 @@ public class Block extends JPanel {
 				blockType=grass;
 			}
 		}
+		Main.getLevel().countBombs();
 		updateBackground();
 	}
 	

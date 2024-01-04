@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -16,8 +15,10 @@ import javax.swing.SwingConstants;
 public class Level extends Container {
 
 	//Fields
-	private static Block[][] levelArray = new Block[8][8];
+	private static Block[][] levelArray;
 	private MouseL mouse;
+	private int bombLeft;
+	private int bombWrong;
 	
 	//Constructor
 	public Level() {
@@ -35,13 +36,23 @@ public class Level extends Container {
 		createLevelArray();
 	}
 	public void createLevelArray() {
-		for (int y=0;y < levelArray.length;y++) {
-			for (int x=0;x < levelArray[y].length;x++) {
-				levelArray[x][y] = new Block(x,y,Math.random()<0.2);
-				levelArray[x][y].addMouseListener(mouse);
-				add(levelArray[x][y]);
-				repaint();
-			}
+		for (int yi=0;yi < levelArray.length;yi++) {
+			final int y = yi;
+			new Thread() {
+				public void run() {
+					for (int x=0;x < levelArray[y].length;x++) {
+						Boolean bomb = false;
+						if (Math.random()<0.2) {
+							bombLeft+=1;
+							bomb = true;
+						}
+						levelArray[x][y] = new Block(x,y,bomb);
+						levelArray[x][y].addMouseListener(mouse);
+						add(levelArray[x][y]);
+						repaint();
+					}
+				}
+			}.start();
 		}
 	}
 	
@@ -82,15 +93,26 @@ public class Level extends Container {
 		for (int y=0;y < levelArray.length;y++) {
 			for (int x=0;x < levelArray[y].length;x++) {
 				levelArray[x][y].leftClick();
+				levelArray[x][y].removeMouseListener(mouse);
+				levelArray[x][y].repaint();
 			}
 		}
+
+		endPanel("You Lost!");
+	}
+	
+	public void win() {
+		endPanel("You Won!");
+	}
+	
+	public void endPanel(String message) {
 		JPanel jpanel = new JPanel();
 		jpanel.setBounds(2+getSize().width/4, getSize().height/4, getSize().width/2, getSize().height/2);
 		jpanel.setBackground(Color.white);
 		jpanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		jpanel.setLayout(null);
 		
-		JLabel jlabel = new JLabel("You Lost!");
+		JLabel jlabel = new JLabel(message);
 		jlabel.setBounds(10, 10, jpanel.getWidth(), 100);
 		jlabel.setFont(new Font("Arial",Font.PLAIN,29));
 		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,8 +127,7 @@ public class Level extends Container {
 		jbutton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.getScreen().remove(Main.getLevel());
-				Main.setLevel(new Level());
+				Main.restart();
 			}
 		});
 		jpanel.add(jbutton);
@@ -117,7 +138,22 @@ public class Level extends Container {
 		setComponentZOrder(jpanel, 0);
 		jpanel.revalidate();
 		jpanel.repaint();
-		
+	}
+	
+	public void countBombs() {
+		bombLeft=0;
+		bombWrong=0;
+		for (int y=0;y < levelArray.length;y++) {
+			for (int x=0;x < levelArray[y].length;x++) {
+				if (levelArray[x][y].hasBomb() & levelArray[x][y].getBlockType()!=Block.flag) {
+					bombLeft+=1;
+				} else if (!(levelArray[x][y].hasBomb()) & (levelArray[x][y].getBlockType()>Block.grass)) {
+					bombWrong+=1;
+				}
+			}
+		}
+		System.out.println(bombLeft + " "+ bombWrong);
+		if (bombLeft==0 & bombWrong==0) {win();}
 	}
 	
 	//IO
@@ -128,6 +164,14 @@ public class Level extends Container {
 	
 	public static Block[][] getLevelArray() {
 		return levelArray;
+	}
+	
+	public int getBombLeft() {
+		return bombLeft;
+	}
+	
+	public void setBombLeft(int bombLeft) {
+		this.bombLeft = bombLeft;
 	}
 	
 }
