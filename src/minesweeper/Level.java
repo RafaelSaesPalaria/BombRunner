@@ -19,6 +19,7 @@ public class Level extends Container {
 	private MouseL mouse;
 	private int bombLeft;
 	private int bombWrong;
+	private int totalBombs;
 	
 	//Constructor
 	public Level() {
@@ -44,6 +45,7 @@ public class Level extends Container {
 						Boolean bomb = false;
 						if (Math.random()<0.2) {
 							bombLeft+=1;
+							totalBombs+=1;
 							bomb = true;
 						}
 						levelArray[x][y] = new Block(x,y,bomb);
@@ -51,6 +53,7 @@ public class Level extends Container {
 						add(levelArray[x][y]);
 						repaint();
 					}
+					Main.getScreen().setTitle("Minesweeper - "+(totalBombs)+" Bombs left.");
 				}
 			}.start();
 		}
@@ -109,15 +112,19 @@ public class Level extends Container {
 		endPanel("You Won!");
 	}
 	
-	public void endPanel(String... message) {
+	public void endPanel(String... messages) {
 		JPanel jpanel = new JPanel();
-		jpanel.setBounds(2+getSize().width/4, getSize().height/4, getSize().width/2, getSize().height/2);
+		int x = 2+getSize().width/4;
+		int y = getSize().height/4;
+		int w = getSize().width/2;
+		int h = getSize().height/2;
+		jpanel.setBounds(x, y, w, h);
 		jpanel.setBackground(Color.white);
 		jpanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		jpanel.setLayout(null);
 		
-		for (int i=0; i < message.length; i++) {
-			JLabel jlabel = new JLabel(message[i]);
+		for (int i=0; i < messages.length; i++) {
+			JLabel jlabel = new JLabel(messages[i]);
 			jlabel.setBounds(10, 10+(i*50), jpanel.getWidth(), 50);
 			jlabel.setFont(new Font("Arial",Font.PLAIN,29));
 			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,6 +153,7 @@ public class Level extends Container {
 	public void countBombs() {
 		bombLeft=0;
 		bombWrong=0;
+		int flags = 0;
 		for (int y=0;y < levelArray.length;y++) {
 			for (int x=0;x < levelArray[y].length;x++) {
 				if (levelArray[x][y].hasBomb() & levelArray[x][y].getBlockType()!=Block.flag) {
@@ -153,9 +161,13 @@ public class Level extends Container {
 				} else if (!(levelArray[x][y].hasBomb()) & (levelArray[x][y].getBlockType()>Block.grass)) {
 					bombWrong+=1;
 				}
+				if (levelArray[x][y].getBlockType()==Block.flag) {
+					flags+=1;
+				}
 			}
 		}
 		if (bombLeft==0 & bombWrong==0) {win();}
+		Main.getScreen().setTitle("Minesweeper - "+(totalBombs-flags)+" Bombs left.");
 	}
 	
 	//IO

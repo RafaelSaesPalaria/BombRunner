@@ -7,9 +7,11 @@ public class MouseL implements MouseListener {
 
 	//Fields
 	private int clickCount = 0;
+	private long lastClick = 0;
 	
 	//Methods
 	public void mouseTreatment(MouseEvent e) {
+		System.out.println(e.getWhen()+" "+lastClick);
 		if (e.getSource().getClass()==Block.class) {
 			clickCount+=1;
 			Block block = (Block) e.getSource();
@@ -26,6 +28,7 @@ public class MouseL implements MouseListener {
 				block.rightClick();
 			}
 		}
+		lastClick = e.getWhen();
 	}
 	
 	//Inhered Methods
