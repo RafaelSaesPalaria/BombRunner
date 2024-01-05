@@ -20,6 +20,7 @@ public class Level extends Container {
 	private int bombLeft;
 	private int bombWrong;
 	private int totalBombs;
+	private int totalFlags;
 	
 	//Constructor
 	public Level() {
@@ -153,7 +154,7 @@ public class Level extends Container {
 	public void countBombs() {
 		bombLeft=0;
 		bombWrong=0;
-		int flags = 0;
+		totalFlags = 0;
 		for (int y=0;y < levelArray.length;y++) {
 			for (int x=0;x < levelArray[y].length;x++) {
 				if (levelArray[x][y].hasBomb() & levelArray[x][y].getBlockType()!=Block.flag) {
@@ -162,12 +163,12 @@ public class Level extends Container {
 					bombWrong+=1;
 				}
 				if (levelArray[x][y].getBlockType()==Block.flag) {
-					flags+=1;
+					totalFlags+=1;
 				}
 			}
 		}
 		if (bombLeft==0 & bombWrong==0) {win();}
-		Main.getScreen().setTitle("Minesweeper - "+(totalBombs-flags)+" Bombs left.");
+		Main.getScreen().setTitle("Minesweeper - "+(totalBombs-totalFlags)+" Bombs left.");
 	}
 	
 	//IO
@@ -186,6 +187,10 @@ public class Level extends Container {
 	
 	public void setBombLeft(int bombLeft) {
 		this.bombLeft = bombLeft;
+	}
+	
+	public int getFlagsLeft() {
+		return totalBombs-totalFlags;
 	}
 	
 }

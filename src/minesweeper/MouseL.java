@@ -12,7 +12,6 @@ public class MouseL implements MouseListener {
 	
 	//Methods
 	public void mouseTreatment(MouseEvent e) {
-		System.out.println(e.getWhen()+" "+lastClick);
 		if (e.getSource().getClass()==Block.class) {
 			clickCount+=1;
 			Block block = (Block) e.getSource();

@@ -69,8 +69,10 @@ public class Block extends JPanel {
 	
 	public void rightClick() {
 		if (blockType>=grass) {
-			if (blockType<questionMark) {
+			if (blockType<questionMark & Main.getLevel().getFlagsLeft()>0) {
 				blockType+=1;
+			} else if (blockType<questionMark & Main.getLevel().getFlagsLeft()<=0){ 
+				blockType=questionMark;
 			} else {
 				blockType=grass;
 			}
