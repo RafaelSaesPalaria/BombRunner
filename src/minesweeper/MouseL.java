@@ -8,6 +8,7 @@ public class MouseL implements MouseListener {
 	//Fields
 	private int clickCount = 0;
 	private long lastClick = 0;
+	private int clickTime = 150;
 	
 	//Methods
 	public void mouseTreatment(MouseEvent e) {
@@ -24,7 +25,7 @@ public class MouseL implements MouseListener {
 				if (block.hasBomb()) {
 					Main.getLevel().lose();
 				}
-			} else if (e.getButton()==MouseEvent.BUTTON3 & e.getID()==MouseEvent.MOUSE_CLICKED) {
+			} else if (e.getButton()==MouseEvent.BUTTON3 & e.getWhen()-lastClick>clickTime) {
 				block.rightClick();
 			}
 		}
