@@ -30,6 +30,9 @@ public class Block extends JPanel {
 			new Color(0,0,139), new Color(128,0,128)};
 	
 	//Constructor
+	public Block(int x, int y) {
+		this(x,y,false);
+	}
 	public Block(int x, int y, boolean hasBomb) {
 		this.hasBomb = hasBomb;
 		int[] coords = getLocationOnGrid(x, y);

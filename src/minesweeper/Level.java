@@ -38,26 +38,30 @@ public class Level extends Container {
 		createLevelArray();
 	}
 	public void createLevelArray() {
-		for (int yi=0;yi < levelArray.length;yi++) {
-			final int y = yi;
-			new Thread() {
-				public void run() {
+		for (int y=0;y < levelArray.length;y++) {
 					for (int x=0;x < levelArray[y].length;x++) {
-						Boolean bomb = false;
-						if (Math.random()<0.2) {
-							bombLeft+=1;
-							totalBombs+=1;
-							bomb = true;
-						}
-						levelArray[x][y] = new Block(x,y,bomb);
+						levelArray[x][y] = new Block(x,y);
 						levelArray[x][y].addMouseListener(mouse);
 						add(levelArray[x][y]);
 						repaint();
 					}
 					Main.getScreen().setTitle("Minesweeper - "+(totalBombs)+" Bombs left.");
 				}
-			}.start();
+		putBombs(10);
+	}
+	
+	public void putBombs(int amount) {
+		for (int i = 0; i < amount; i++) {
+			int x = (int) (Math.random()*levelArray[0].length);
+			int y = (int) (Math.random()*levelArray.length);
+			System.out.println(x+" "+y);
+			if (levelArray[x][y].hasBomb()) {
+				i-=1;
+			}
+			levelArray[x][y].setBomb(true);
 		}
+		bombLeft=amount;
+		totalBombs=amount;
 	}
 	
 	public int countBombsAround(int xGrid, int yGrid) {
