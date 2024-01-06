@@ -59,7 +59,7 @@ public class Block extends JPanel {
 				int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
 				if (bombs>0) {
 					jlabel.setText(String.valueOf(bombs));
-					jlabel.setForeground(Colors[bombs]);
+					jlabel.setForeground(Colors[bombs%Colors.length]);
 				} else {
 					Main.getLevel().poolZeros(coords[0],coords[1]);
 				}
