@@ -43,7 +43,7 @@ public class Level extends Container {
 						repaint();
 					}
 				}
-		putBombs(10);
+		putBombs(1);
 	}
 	
 	public void putBombs(int amount) {
@@ -123,9 +123,11 @@ public class Level extends Container {
 		jpanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		jpanel.setLayout(null);
 		
+		int distance = 150/messages.length;
+		
 		for (int i=0; i < messages.length; i++) {
 			JLabel jlabel = new JLabel(messages[i]);
-			jlabel.setBounds(10, 10+(i*50), jpanel.getWidth(), 50);
+			jlabel.setBounds(10, 10+(i*distance), jpanel.getWidth(), 50);
 			jlabel.setFont(new Font("Arial",Font.PLAIN,29));
 			jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 			jpanel.add(jlabel);
