@@ -43,7 +43,7 @@ public class Level extends Container {
 				repaint();
 			}
 		}
-		putBombs(64);
+		putBombs(10);
 	}
 	
 	public void putBombs(int amount) {
