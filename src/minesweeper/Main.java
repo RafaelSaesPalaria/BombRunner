@@ -1,7 +1,5 @@
 package minesweeper;
 
-import java.awt.Rectangle;
-
 public class Main {
 
 	//Fields

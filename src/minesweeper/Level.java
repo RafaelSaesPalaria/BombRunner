@@ -87,11 +87,11 @@ public class Level extends Container {
 	
 	public void checkZero(int xGrid, int yGrid) {
 		if (validPosition(xGrid, yGrid)) {
+			levelArray[xGrid][yGrid].leftClick();
 			if (validPosition(xGrid, yGrid) &
 				levelArray[xGrid][yGrid].getBlockType()==Block.grass &
 				countBombsAround(xGrid, yGrid)==0) {
 				
-				levelArray[xGrid][yGrid].leftClick();
 				poolZeros(xGrid,yGrid);
 			}
 		}
