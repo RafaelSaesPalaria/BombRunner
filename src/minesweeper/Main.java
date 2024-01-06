@@ -16,6 +16,7 @@ public class Main {
 		screen = new Screen();
 		level = new Level();
 		screen.add(level);
+		Timer.start();
 	}
 	
 	public static void restart() {

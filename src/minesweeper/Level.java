@@ -28,15 +28,12 @@ public class Level extends Container {
 		setSize(Main.getScreen().getContentPane().getSize());
 		setLayout(null);
 		Main.getScreen().add(this);
-		start();
-	}
-	
-	//Methods
-	public void start() {
 		levelArray = new Block[8][8];
 		mouse = new MouseL();
 		createLevelArray();
 	}
+	
+	//Methods
 	public void createLevelArray() {
 		for (int y=0;y < levelArray.length;y++) {
 					for (int x=0;x < levelArray[y].length;x++) {
@@ -45,7 +42,6 @@ public class Level extends Container {
 						add(levelArray[x][y]);
 						repaint();
 					}
-					Main.getScreen().setTitle("Minesweeper - "+(totalBombs)+" Bombs left.");
 				}
 		putBombs(10);
 	}
@@ -54,7 +50,6 @@ public class Level extends Container {
 		for (int i = 0; i < amount; i++) {
 			int x = (int) (Math.random()*levelArray[0].length);
 			int y = (int) (Math.random()*levelArray.length);
-			System.out.println(x+" "+y);
 			if (levelArray[x][y].hasBomb()) {
 				i-=1;
 			}
@@ -110,11 +105,11 @@ public class Level extends Container {
 			}
 		}
 
-		endPanel("You Lost!",bombLeft+" Bombs left");
+		endPanel("You Lost!",bombLeft+" Bombs left",Timer.getGameTime()+" Seconds");
 	}
 	
 	public void win() {
-		endPanel("You Won!");
+		endPanel("You Won!",Timer.getGameTime()+" Seconds");
 	}
 	
 	public void endPanel(String... messages) {
@@ -143,6 +138,7 @@ public class Level extends Container {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.restart();
+				Timer.resetGameTime();
 			}
 		});
 		jpanel.add(jbutton);
@@ -172,7 +168,7 @@ public class Level extends Container {
 			}
 		}
 		if (bombLeft==0 & bombWrong==0) {win();}
-		Main.getScreen().setTitle("Minesweeper - "+(totalBombs-totalFlags)+" Bombs left.");
+		Main.getScreen().updateTitle();
 	}
 	
 	//IO
@@ -195,6 +191,10 @@ public class Level extends Container {
 	
 	public int getFlagsLeft() {
 		return totalBombs-totalFlags;
+	}
+	
+	public int getTotalBombs() {
+		return totalBombs;
 	}
 	
 }
