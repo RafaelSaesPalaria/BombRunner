@@ -17,10 +17,12 @@ public class MouseL implements MouseListener {
 			Block block = (Block) e.getSource();
 			
 			if (e.getButton()==MouseEvent.BUTTON1) {
+				
 				if (clickCount<=1) {
 					block.setBomb(false);
 				}
 				block.leftClick();
+				
 				if (block.hasBomb()) {
 					Main.getLevel().lose();
 				}
@@ -60,6 +62,11 @@ public class MouseL implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//IO
+	public int getClickCount() {
+		return clickCount;
 	}
 
 }
