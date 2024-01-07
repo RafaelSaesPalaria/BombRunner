@@ -12,9 +12,12 @@ public class MouseL implements MouseListener {
 	
 	//Methods
 	public void mouseTreatment(MouseEvent e) {
-		if (e.getSource().getClass()==Block.class) {
+		int x = e.getX()/Block.blockSize.width;
+		int y = e.getY()/Block.blockSize.height;
+		
+		if (Level.isValidPosition(x, y)) {
 			clickCount+=1;
-			Block block = (Block) e.getSource();
+			Block block = Main.getLevel().getLevelArray()[x][y];
 			
 			if (e.getButton()==MouseEvent.BUTTON1) {
 				
