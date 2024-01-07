@@ -149,8 +149,7 @@ public class Level extends Container {
 		
 		add(jpanel);
 		setComponentZOrder(jpanel, 0);
-		jpanel.revalidate();
-		jpanel.repaint();
+		Main.getScreen().repaint();
 	}
 	
 	public void countBombs() {
