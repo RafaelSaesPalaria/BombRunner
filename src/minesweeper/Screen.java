@@ -6,7 +6,7 @@ public class Screen extends JFrame{
 
 	//Constructor
 	public Screen() {
-		setTitle("BombRunner - [Start Game]");
+		updateTitle();
 		setLocation(200, 200);
 		setSize(574,600);
 		setLayout(null);
@@ -16,7 +16,11 @@ public class Screen extends JFrame{
 	
 	//Methods
 	public void updateTitle() {
-		Main.getScreen().setTitle("BombRunner - "+(Main.getLevel().getFlagsLeft())+" Bombs left. "+Timer.getGameTime()+" Seconds");
+		if (Timer.getGameTime()<0) {
+			setTitle("BombRunner - [Start Game]");
+		} else {
+			setTitle("BombRunner - "+(Main.getLevel().getFlagsLeft())+" Bombs left. "+Timer.getGameTime()+" Seconds");
+		}
 	}
 	
 }

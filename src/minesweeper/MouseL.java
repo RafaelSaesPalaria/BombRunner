@@ -22,6 +22,7 @@ public class MouseL implements MouseListener {
 			if (e.getButton()==MouseEvent.BUTTON1) {
 				
 				if (clickCount<=1) {
+					Timer.start();
 					block.setBomb(false);
 				}
 				block.leftClick(false);

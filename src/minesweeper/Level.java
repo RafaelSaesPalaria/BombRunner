@@ -24,6 +24,7 @@ public class Level extends Container {
 	
 	//Constructor
 	public Level() {
+		Main.getScreen().updateTitle();
 		setLocation(0,0);
 		setSize(Main.getScreen().getContentPane().getSize());
 		setLayout(null);
@@ -98,7 +99,6 @@ public class Level extends Container {
 			if (isValidPosition(xGrid, yGrid) &
 				levelArray[xGrid][yGrid].getBlockType()==Block.grass &
 				countBombsAround(xGrid, yGrid)==0) {
-				
 				poolZeros(xGrid,yGrid);
 			}
 		}
@@ -111,9 +111,10 @@ public class Level extends Container {
 				if (levelArray[x][y].hasBomb() & levelArray[x][y].getBlockType()!=Block.flag) {
 					bombLeft+=1;
 				}
-				//levelArray[x][y].leftClick();
 				levelArray[x][y].leftClick(true);
+				
 				levelArray[x][y].repaint();
+				levelArray[x][y].revalidate();
 			}
 		}
 
@@ -125,6 +126,9 @@ public class Level extends Container {
 	}
 	
 	public void endPanel(String... messages) {
+		removeMouseListener(mouse);
+		Timer.stop();
+		
 		JPanel jpanel = new JPanel();
 		int x = 2+getSize().width/4;
 		int y = getSize().height/4;
@@ -152,7 +156,8 @@ public class Level extends Container {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.restart();
-				Timer.resetGameTime();
+				Timer.reset();
+				Main.getScreen().updateTitle();
 			}
 		});
 		jpanel.add(jbutton);
