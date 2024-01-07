@@ -24,7 +24,7 @@ public class MouseL implements MouseListener {
 				if (clickCount<=1) {
 					block.setBomb(false);
 				}
-				block.leftClick();
+				block.leftClick(false);
 				
 				if (block.hasBomb()) {
 					Main.getLevel().lose();

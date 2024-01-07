@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 public class Block extends JPanel {
 
 	//Fields
-	public static final Dimension blockSize = new Dimension(70,70);
+	public static Dimension blockSize = new Dimension(70,70);
 	public static final int bomb = -2;
 	public static final int dirt = -1;
 	public static final int grass= 0;
@@ -49,19 +49,21 @@ public class Block extends JPanel {
 	}
 	
 	//Methods
-	public void leftClick() {
+	public void leftClick(boolean lost) {
 		if (blockType==grass) {
 			if (hasBomb) {
 				blockType=bomb;
 			} else {
 				blockType=dirt;
-				int[] coords = getGridLocation(this.getX(),this.getY());
-				int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
-				if (bombs>0) {
-					jlabel.setText(String.valueOf(bombs));
-					jlabel.setForeground(Colors[bombs%Colors.length]);
-				} else {
-					Main.getLevel().poolZeros(coords[0],coords[1]);
+				if (!lost) {
+					int[] coords = getGridLocation(this.getX(),this.getY());
+					int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
+					if (bombs>0) {
+						jlabel.setText(String.valueOf(bombs));
+						jlabel.setForeground(Colors[bombs%Colors.length]);
+					} else {
+						Main.getLevel().poolZeros(coords[0],coords[1]);
+					}
 				}
 			}
 		}
