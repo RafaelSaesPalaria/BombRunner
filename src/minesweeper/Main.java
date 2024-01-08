@@ -13,7 +13,7 @@ public class Main {
 	
 	//Methods
 	public static void start() {
-		screen = new Screen();
+		screen = Screen.getInstance();
 		level = Level.getInstance();
 		screen.add(level);
 	}
@@ -27,14 +27,6 @@ public class Main {
 	}
 	
 	//IO
-	public static Level getLevel() {
-		return level;
-	}
-	
-	public static Screen getScreen() {
-		return screen;
-	}
-	
 	public static void setLevel(Level level) {
 		Main.level = level;
 	}

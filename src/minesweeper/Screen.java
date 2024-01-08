@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 public class Screen extends JFrame{
 
 	//Fields
+	private static Screen screen;
 	private String name = "BombRunner";
 	private String initialStatusMessage = "[Start Game]";
 	private Point location = new Point(200,200);
@@ -24,6 +25,13 @@ public class Screen extends JFrame{
 	}
 	
 	//Methods
+	public static synchronized Screen getInstance() {
+		if (screen == null) {
+			screen = new Screen();
+		}
+		return screen;
+	}
+	
 	public void updateTitle() {
 		int gameTime = Timer.getGameTime();
 		String status = initialStatusMessage;

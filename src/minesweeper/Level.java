@@ -25,11 +25,12 @@ public class Level extends Container {
 	
 	//Constructor
 	public Level() {
-		Main.getScreen().updateTitle();
+		Screen screen = Screen.getInstance();
+		screen.updateTitle();
 		setLocation(0,0);
-		setSize(Main.getScreen().getContentPane().getSize());
+		setSize(screen.getContentPane().getSize());
 		setLayout(null);
-		Main.getScreen().add(this);
+		screen.add(this);
 		levelArray = new Block[8][8];
 		mouse = new MouseL();
 		createLevelArray();
@@ -158,7 +159,7 @@ public class Level extends Container {
 			public void actionPerformed(ActionEvent e) {
 				Main.restart();
 				Timer.reset();
-				Main.getScreen().updateTitle();
+				Screen.getInstance().updateTitle();
 			}
 		});
 		jpanel.add(jbutton);
@@ -167,7 +168,7 @@ public class Level extends Container {
 		
 		add(jpanel);
 		setComponentZOrder(jpanel, 0);
-		Main.getScreen().repaint();
+		Screen.getInstance().repaint();
 	}
 	
 	public void countBombs() {
@@ -187,7 +188,7 @@ public class Level extends Container {
 			}
 		}
 		if (bombLeft==0 & bombWrong==0) {win();}
-		Main.getScreen().updateTitle();
+		Screen.getInstance().updateTitle();
 	}
 	
 	public static void reset() {

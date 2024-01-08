@@ -21,7 +21,7 @@ public class Timer{
 		new Thread() {
 			public void run() {
 				while (running) {
-					Main.getScreen().updateTitle();
+					Screen.getInstance().updateTitle();
 					gameTime+=1;
 					try {
 						Thread.sleep(1000);
