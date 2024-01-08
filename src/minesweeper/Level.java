@@ -25,15 +25,19 @@ public class Level extends Container {
 	
 	//Constructor
 	public Level() {
+		defaultLevelSettings();
+		levelArray = new Block[8][8];
+		mouse = new MouseL();
+		createLevelArray();
+	}
+	
+	public void defaultLevelSettings() {
 		Screen screen = Screen.getInstance();
 		screen.updateTitle();
 		setLocation(0,0);
 		setSize(screen.getContentPane().getSize());
 		setLayout(null);
 		screen.add(this);
-		levelArray = new Block[8][8];
-		mouse = new MouseL();
-		createLevelArray();
 	}
 	
 	//Methods

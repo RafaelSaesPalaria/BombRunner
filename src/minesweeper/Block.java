@@ -43,20 +43,26 @@ public class Block extends JPanel {
 	}
 	public Block(int x, int y, boolean hasBomb) {
 		this.hasBomb = hasBomb;
-		int[] coords = getLocationOnGrid(x, y);
-		setLocation(coords[0], coords[1]);
+		setLocation(getLocationOnGrid(x, y));
+		updateBackground();
+		defaultBlockSettings();
+		defaultJLabelSettings();
+	}
+	
+	//Methods
+	public void defaultBlockSettings() {
+		setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		setSize(blockSize);
 		setLayout(null);
-		setBackground(Color.green);
-		setBorder(BorderFactory.createLineBorder(Color.black, 1));
-		
+	}
+	
+	public void defaultJLabelSettings() {
 		jlabel.setSize(blockSize);
 		jlabel.setHorizontalAlignment(SwingConstants.CENTER);
 		jlabel.setFont(new Font("Arial",Font.BOLD,30));
 		add(jlabel);
 	}
 	
-	//Methods
 	public void leftClick(boolean lost) {
 		Level level = Level.getInstance();
 		if (blockType==grass) {
@@ -83,7 +89,7 @@ public class Block extends JPanel {
 	
 	public void rightClick() {
 		Level level = Level.getInstance();
-		if (blockType>=grass) {
+		if (!wasClicked()) {
 			if (blockType<questionMark & level.getFlagsLeft()>0) {
 				blockType+=1;
 			} else if (blockType<questionMark & level.getFlagsLeft()<=0){ 
@@ -104,6 +110,7 @@ public class Block extends JPanel {
 			jlabel.setText("");
 		}
 	}
+	
 	public int[] getGridLocation(int xGrid, int yGrid) {
 		int[] coords = {xGrid/blockSize.width,yGrid/blockSize.height};
 		return coords;
@@ -113,6 +120,10 @@ public class Block extends JPanel {
 		int[] coords = {x*blockSize.width,y*blockSize.height};
 		return coords;
 	}
+	//Boolean
+	public boolean wasClicked() {
+		return !(blockType>=grass);
+	}
 	
 	//IO
 	public boolean hasBomb() {
@@ -121,6 +132,10 @@ public class Block extends JPanel {
 	
 	public void setBomb(boolean bomb) {
 		this.hasBomb = bomb;
+	}
+	
+	public void setLocation(int[] coords) {
+		setLocation(coords[0], coords[1]);
 	}
 	
 	public int getBlockType() {
