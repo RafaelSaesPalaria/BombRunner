@@ -9,7 +9,6 @@ public class Timer{
 	//Methods
 	public static void reset() {
 		gameTime = -1;
-		running = true;
 	}
 	
 	public static void stop() {
@@ -18,11 +17,13 @@ public class Timer{
 	
 	//Inhred Methods
 	public static void start() {
+		running = true;
 		new Thread() {
 			public void run() {
 				while (running) {
-					Screen.getInstance().updateTitle();
+					
 					gameTime+=1;
+					Screen.getInstance().updateTitle();
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {

@@ -25,9 +25,4 @@ public class Main {
 		screen.add(level);
 		screen.repaint();
 	}
-	
-	//IO
-	public static void setLevel(Level level) {
-		Main.level = level;
-	}
 }
