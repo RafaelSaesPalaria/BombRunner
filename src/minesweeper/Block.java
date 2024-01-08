@@ -23,11 +23,19 @@ public class Block extends JPanel {
 	private int blockType = grass;
 	private JLabel jlabel = new JLabel();
 	
-	private Color[] Colors = {
+	private Color[] textColors = {
 			Color.red, Color.orange,
 			Color.yellow, Color.green,
 			Color.cyan,Color.BLUE,
 			new Color(0,0,139), new Color(128,0,128)};
+	
+	private Color[] backgroudColors = {
+		Color.black,
+		new Color(205,142,102),
+		Color.green,
+		Color.red,
+		Color.green
+	};
 	
 	//Constructor
 	public Block(int x, int y) {
@@ -61,7 +69,7 @@ public class Block extends JPanel {
 					int bombs = level.countBombsAround(coords[0],coords[1]);
 					if (bombs>0) {
 						jlabel.setText(String.valueOf(bombs));
-						jlabel.setForeground(Colors[bombs%Colors.length]);
+						jlabel.setForeground(textColors[bombs%textColors.length]);
 					} else {
 						level.poolZeros(coords[0],coords[1]);
 					}
@@ -89,25 +97,11 @@ public class Block extends JPanel {
 	}
 	
 	public void updateBackground() {
-		switch (blockType) {
-			case bomb:
-				setBackground(Color.black);
-				break;
-			case dirt:
-				setBackground(new Color(205,142,102));
-				break;
-			case flag:
-				setBackground(Color.red);
-				break;
-			case questionMark:
-				jlabel.setText("?");
-				setBackground(Color.green);
-				break;
-			case grass:
-			default:
-				jlabel.setText("");
-				setBackground(Color.green);
-				break;
+		setBackground(backgroudColors[blockType+2]);
+		if (blockType==questionMark) {
+			jlabel.setText("?");
+		} else if (blockType==grass){
+			jlabel.setText("");
 		}
 	}
 	public int[] getGridLocation(int xGrid, int yGrid) {
