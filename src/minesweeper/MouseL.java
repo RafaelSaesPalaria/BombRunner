@@ -17,7 +17,7 @@ public class MouseL implements MouseListener {
 		
 		if (Level.isValidPosition(x, y)) {
 			clickCount+=1;
-			Block block = Main.getLevel().getLevelArray()[x][y];
+			Block block = Level.getInstance().getLevelArray()[x][y];
 			
 			if (e.getButton()==MouseEvent.BUTTON1) {
 				
@@ -28,7 +28,7 @@ public class MouseL implements MouseListener {
 				block.leftClick(false);
 				
 				if (block.hasBomb()) {
-					Main.getLevel().lose();
+					Level.getInstance().lose();
 				}
 			} else if (e.getButton()==MouseEvent.BUTTON3 & e.getWhen()-lastClick>clickTime) {
 				block.rightClick();

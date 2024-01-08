@@ -27,8 +27,10 @@ public class Screen extends JFrame{
 	public void updateTitle() {
 		int gameTime = Timer.getGameTime();
 		String status = initialStatusMessage;
+		
 		if (gameTime>=0) {
-			int flagsLeft= Main.getLevel().getFlagsLeft();
+			int flagsLeft= Level.getInstance().getFlagsLeft();
+			
 			status = (flagsLeft)+" Bombs left. "+gameTime+" Seconds";
 		}
 		setTitle(name+" - "+status);

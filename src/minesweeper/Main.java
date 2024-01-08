@@ -14,13 +14,14 @@ public class Main {
 	//Methods
 	public static void start() {
 		screen = new Screen();
-		level = new Level();
+		level = Level.getInstance();
 		screen.add(level);
 	}
 	
 	public static void restart() {
 		screen.remove(level);
-		level = new Level();
+		Level.reset();
+		level = Level.getInstance();
 		screen.add(level);
 		screen.repaint();
 	}

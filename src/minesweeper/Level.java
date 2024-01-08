@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 public class Level extends Container {
 
 	//Fields
+	private static Level level;
 	private static Block[][] levelArray;
 	private MouseL mouse;
 	private int bombLeft;
@@ -189,10 +190,21 @@ public class Level extends Container {
 		Main.getScreen().updateTitle();
 	}
 	
+	public static void reset() {
+		level = new Level();
+	}
+	
 	//IO
 	public static boolean isValidPosition(int xGrid, int yGrid) {
 		return ((xGrid>=0 & xGrid<levelArray[0].length) &
 				(yGrid>=0 & yGrid<levelArray.length));
+	}
+	
+	public static synchronized Level getInstance() {
+		if (level == null) {
+			reset();
+		}
+		return level;
 	}
 	
 	public static Block[][] getLevelArray() {

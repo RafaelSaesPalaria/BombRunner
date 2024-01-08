@@ -50,6 +50,7 @@ public class Block extends JPanel {
 	
 	//Methods
 	public void leftClick(boolean lost) {
+		Level level = Level.getInstance();
 		if (blockType==grass) {
 			if (hasBomb) {
 				blockType=bomb;
@@ -57,32 +58,33 @@ public class Block extends JPanel {
 				blockType=dirt;
 				if (!lost) {
 					int[] coords = getGridLocation(this.getX(),this.getY());
-					int bombs = Main.getLevel().countBombsAround(coords[0],coords[1]);
+					int bombs = level.countBombsAround(coords[0],coords[1]);
 					if (bombs>0) {
 						jlabel.setText(String.valueOf(bombs));
 						jlabel.setForeground(Colors[bombs%Colors.length]);
 					} else {
-						Main.getLevel().poolZeros(coords[0],coords[1]);
+						level.poolZeros(coords[0],coords[1]);
 					}
 				}
 			}
 		}
-		Main.getLevel().countBombs();
+		level.countBombs();
 		updateBackground();
 		
 	}
 	
 	public void rightClick() {
+		Level level = Level.getInstance();
 		if (blockType>=grass) {
-			if (blockType<questionMark & Main.getLevel().getFlagsLeft()>0) {
+			if (blockType<questionMark & level.getFlagsLeft()>0) {
 				blockType+=1;
-			} else if (blockType<questionMark & Main.getLevel().getFlagsLeft()<=0){ 
+			} else if (blockType<questionMark & level.getFlagsLeft()<=0){ 
 				blockType=questionMark;
 			} else {
 				blockType=grass;
 			}
 		}
-		Main.getLevel().countBombs();
+		level.countBombs();
 		updateBackground();
 	}
 	
