@@ -1,9 +1,11 @@
 package bombrunner;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Screen extends JFrame{
 
@@ -25,6 +27,15 @@ public class Screen extends JFrame{
 	}
 	
 	//Methods
+	@Override
+	public Component add(Component comp) {
+		System.out.println(comp + " Is being added to the screen.");
+		screen.updateTitle();
+		comp.setLocation(0,0);
+		comp.setSize(screen.getContentPane().getSize());
+		return super.add(comp);
+	}
+	
 	public static synchronized Screen getInstance() {
 		if (screen == null) {
 			screen = new Screen();

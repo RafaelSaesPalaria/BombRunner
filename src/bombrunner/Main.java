@@ -3,6 +3,7 @@ package bombrunner;
 public class Main {
 
 	//Fields
+	private static MouseL mouse;
 	private static Screen screen;
 	private static Level level;
 	
@@ -15,6 +16,8 @@ public class Main {
 	public static void start() {
 		screen = Screen.getInstance();
 		level = Level.getInstance();
+		mouse = new MouseL();
+		level.setMouse(mouse);
 		screen.add(level);
 	}
 	

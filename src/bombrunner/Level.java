@@ -17,22 +17,16 @@ public class Level extends Container {
 	//Fields
 	private static Level level;
 	private static Block[][] levelArray;
-	private MouseL mouse;
+	private static MouseL mouse;
 	private int bombLeft;
 	private int bombWrong;
 	private int totalBombs;
 	private int totalFlags;
 	
 	//Constructor
-	public Level() {
-		Screen screen = Screen.getInstance();
-		screen.updateTitle();
-		setLocation(0,0);
-		setSize(screen.getContentPane().getSize());
-		setLayout(null);
-		screen.add(this);
+	public Level(MouseL mouse) {
+		Level.mouse = mouse;
 		levelArray = new Block[8][8];
-		mouse = new MouseL();
 		createLevelArray();
 	}
 	
@@ -192,7 +186,7 @@ public class Level extends Container {
 	}
 	
 	public static void reset() {
-		level = new Level();
+		level = new Level(mouse);
 	}
 	
 	//IO
@@ -226,6 +220,11 @@ public class Level extends Container {
 	
 	public int getTotalBombs() {
 		return totalBombs;
+	}
+	
+	public void setMouse(MouseL mouse) {
+		Level.mouse = mouse;
+		addMouseListener(mouse);
 	}
 	
 }
