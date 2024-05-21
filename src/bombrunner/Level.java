@@ -153,6 +153,7 @@ public class Level extends Container {
 			public void actionPerformed(ActionEvent e) {
 				Main.restart();
 				Timer.reset();
+				Timer.start();
 				Screen.getInstance().updateTitle();
 			}
 		});
