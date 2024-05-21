@@ -1,4 +1,4 @@
-package minesweeper;
+package bombrunner;
 
 import java.awt.Color;
 import java.awt.Dimension;

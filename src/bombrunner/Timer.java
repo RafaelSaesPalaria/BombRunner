@@ -1,4 +1,4 @@
-package minesweeper;
+package bombrunner;
 
 public class Timer{
 
